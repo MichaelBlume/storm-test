@@ -9,9 +9,9 @@
   (.. (impl-get-log "") getLogger getParent
     (setLevel level)))
 
-(defmacro with-quiet-logs [& body]
+(defmacro with-quiet-logs [level & body]
   `(let [ old-level# (.. (impl-get-log "") getLogger getParent getLevel) ]
-     (set-log-level org.apache.log4j.Level/OFF)
+     (set-log-level @level)
      (let [ ret# (do ~@body) ]
        (set-log-level old-level#)
        ret#)))
